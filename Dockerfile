@@ -9,4 +9,3 @@ RUN npm install -g cxo-relay
 
 # Set the entry point to cxo-relay so that it's executed when the container runs
 ENTRYPOINT ["cxo-relay"]
-
