@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cargox-relay
+  #namespace: cargox-relay
+  labels:
+    app: cargox-relay
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cargox-relay
+  template:
+    metadata:
+      labels:
+        app: cargox-relay
+    spec:
+      #securityContext:
+          #runAsUser: 2022
+          #runAsGroup: 2022
+          #fsGroup: 2022
+      containers:
+        - name: cargox-relay
+          image: omniscienceuk/cargox-relay-amd64:latest
+          imagePullPolicy: Always  # Optional
+          args:
+            - "--key"
+            - "<<PRIVATE_KEY_OF_MATIC_GAS_WALLET>>"
+            - "--relayUrl"
+            - "https://cargox.digital/api/v3/relay/"
+            - "--rpcUrl"
+            - "<<POLYGON_MAINNET_RPC_URL>>"
+            - "--rewardAddr"
+            - "<<PUBLIC_ADDR_THAT_HOLDS_CARGOX_FOR_REWARDS>>"
+            #- "--doffa" # Uncomment this flag to compete for FFA docs
+            #- "--gas"  # Uncomment this flag to use Custom gas price
+            #- "160"
+            - "--gascap"  # Custom gas price cap
+            - "500"
+          resources: # Set resource limits if reqd.
+           #limits:
+             #memory: "256Mi"
+             #cpu: "150m"
+           #requests:
+             #memory: "128Mi"
+             #cpu: "100m"
